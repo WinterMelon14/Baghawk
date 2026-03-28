@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from ultralytics import YOLO
 from pathlib import Path
 import cv2
@@ -6,6 +7,11 @@ import base64
 from pydantic import BaseModel, Field
 import random 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+        allow_origins=["http://localhost:3000"],  # Nextjs
+    allow_methods=["*"],
+    allow_headers=["*"],)
 
 # Load model once 
 BASE_DIR = Path(__file__).resolve().parent
