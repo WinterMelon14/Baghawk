@@ -1,4 +1,5 @@
-const FAST_URL = "http://localhost:8000";
+const FAST_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
+
 
 export async function getImage(){
     const res = await fetch(`${FAST_URL}/image`)
