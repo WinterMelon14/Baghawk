@@ -88,7 +88,7 @@ export default function Drawer({image, drawable, onBoxesChange}){
         }
 
         // Ignore tiny accidental clicks that may occur (no object will be this tiny)
-        if (Math.abs(newBox.x2 - newBox.x1) < 32 || Math.abs(newBox.y2 - newBox.y1) < 32) {
+        if (Math.abs(newBox.x2 - newBox.x1) < 22 && Math.abs(newBox.y2 - newBox.y1) < 22) {
             setDrawing(null)
             return
         }

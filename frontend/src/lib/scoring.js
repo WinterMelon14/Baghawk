@@ -29,8 +29,9 @@ const iou = (boxA, boxB) => {
  */
 const boxScore = (iou, labelCorrect) => {
     const g = labelCorrect ? 1 : 0;
+    const k = 1.61;
     //return Math.round(Math.atanh(iou - 0.001) * 0.7 * (g + 0.4) * 100) / 100;
-    return Math.round(3 * Math.tanh(iou - 0.001) * 0.7 * (g + 0.4) * 100) / 100;
+    return Math.round(3 * Math.tanh(k * (iou - 0.001)) * 0.7 * (g + 0.4) * 100) / 100;
 }   
 
 
@@ -46,7 +47,8 @@ export default function score(predictions, groundTruths) {
 
     const used = new Set();
     let total = 0;
-    // Use greedy matching to match predicted boxes with best IoU against ground truth boxes
+
+    // Use greedy matching to find the best IoU for each ground truth
     for (const gt of groundTruths) {
         let bestIou = 0;
         let bestIdx = -1;
@@ -63,13 +65,14 @@ export default function score(predictions, groundTruths) {
         if (bestIdx !== -1) {
             used.add(bestIdx);
             const labelCorrect = predictions[bestIdx].label === gt.label;
-
             total += boxScore(bestIou, labelCorrect);
         }
-        // missed gt box adds 0 implicitly
-        // extra predicted boxes that never matched, add 0 implicitly
     }
 
-    return total / groundTruths.length; // The average score over all ground truth boxes handles the fact that missed boxes are a 0
-    // It also prevents against spamming extra boxes, since the score will never get inflated due to the denominator being fixed to the ground truth length
+    // Penalize extra unmatched predictions
+    const extraBoxes = predictions.length - used.size;
+    const penalty = 0.3 * extraBoxes;  
+
+    const raw = total / groundTruths.length;
+    return Math.max(0, raw - penalty);  // floor at 0 to prevent negative scores
 }
