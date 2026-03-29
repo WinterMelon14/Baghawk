@@ -62,13 +62,13 @@ export default function score(predictions, groundTruths) {
         if (bestIdx !== -1) {
             used.add(bestIdx);
             const labelCorrect = predictions[bestIdx].label === gt.label;
-            console.log("best iou: ", bestIou, "label correct: ", labelCorrect, "box score: ", boxScore(bestIou, labelCorrect))
+
             total += boxScore(bestIou, labelCorrect);
         }
         // missed gt box adds 0 implicitly
         // extra predicted boxes that never matched, add 0 implicitly
     }
-    console.log("total: ", total, "ground truth length: ", groundTruths.length)
+
     return total / groundTruths.length; // The average score over all ground truth boxes handles the fact that missed boxes are a 0
     // It also prevents against spamming extra boxes, since the score will never get inflated due to the denominator being fixed to the ground truth length
 }

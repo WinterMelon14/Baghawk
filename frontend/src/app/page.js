@@ -6,6 +6,7 @@ import { useState } from "react"
 import { getImage, predict } from "@/lib/api"
 import Drawer from "@/components/Drawer"
 import score from "@/lib/scoring"
+import AnnotatedImage from "@/components/AnnotatedImage"
 
 export default function Home() {
   const [imgId, setImgId] = useState(null)
@@ -15,6 +16,7 @@ export default function Home() {
   const [isDrawable, setIsDrawable] = useState(true)
   const [scores, setScores] = useState({human: 0, model: 0})
   const [deltas, setDeltas] = useState({human: 0, model: 0})
+  const [groundTruths, setGroundTruths] = useState(null)
 
   async function handleGetImage() {
     setUserBoxes([])
@@ -39,7 +41,7 @@ export default function Home() {
 
     let formattedBoxes = userBoxes.map(box => ({label: box.label, bbox: [box.x1, box.y1, box.x2, box.y2]}))
 
-
+    setGroundTruths(data.ground_truth)
     // groundTruths is already formatted
 
     const modelScore = score(data.detections, data.ground_truth)
@@ -65,7 +67,16 @@ export default function Home() {
         )}
       </div>
       {predictedImage && (
-        <img src={`data:image/jpeg;base64,${predictedImage}`} alt="prediction" />
+       
+         <div style={{ display: "flex", gap: "20px" }}>
+         <img src={`data:image/jpeg;base64,${predictedImage}`} alt="prediction" />
+        <AnnotatedImage
+            image={image}
+            boxes={groundTruths}
+            color="green"
+            title="Ground Truth"
+        />
+    </div>
       )}
     </main>
   )
