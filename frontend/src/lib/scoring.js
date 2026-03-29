@@ -29,7 +29,7 @@ const iou = (boxA, boxB) => {
  */
 const boxScore = (iou, labelCorrect) => {
     const g = labelCorrect ? 1 : 0;
-    return Math.round(Math.atanh(iou - 0.001) * 0.7 * (g + 0.4), 2);
+    return Math.round(Math.atanh(iou - 0.001) * 0.7 * (g + 0.4) * 100) / 100;
 }
 
 
@@ -40,7 +40,7 @@ const boxScore = (iou, labelCorrect) => {
  * @param {Array<{label: string, bbox: Array<number>}>} groundTruths - Ground truth bounding boxes with labels
  * @returns {number} - Score based on IoU and label correctness
  */
-export function score(predictions, groundTruths) {
+export default function score(predictions, groundTruths) {
     if (groundTruths.length === 0) return 0;
 
     const used = new Set();
@@ -62,12 +62,13 @@ export function score(predictions, groundTruths) {
         if (bestIdx !== -1) {
             used.add(bestIdx);
             const labelCorrect = predictions[bestIdx].label === gt.label;
+            console.log("best iou: ", bestIou, "label correct: ", labelCorrect, "box score: ", boxScore(bestIou, labelCorrect))
             total += boxScore(bestIou, labelCorrect);
         }
         // missed gt box adds 0 implicitly
         // extra predicted boxes that never matched, add 0 implicitly
     }
-
+    console.log("total: ", total, "ground truth length: ", groundTruths.length)
     return total / groundTruths.length; // The average score over all ground truth boxes handles the fact that missed boxes are a 0
     // It also prevents against spamming extra boxes, since the score will never get inflated due to the denominator being fixed to the ground truth length
 }
