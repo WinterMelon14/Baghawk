@@ -7,6 +7,7 @@ import { getImage, predict } from "@/lib/api"
 import Drawer from "@/components/Drawer"
 import score from "@/lib/scoring"
 import AnnotatedImage from "@/components/AnnotatedImage"
+import Scoreboard from "@/components/Scoreboard"
 
 export default function Home() {
   const [imgId, setImgId] = useState(null)
@@ -52,6 +53,7 @@ export default function Home() {
 
   return (
     <main>
+      <Scoreboard scores={scores} deltas={deltas} />
       <button onClick={handleGetImage}>Get Image</button>
       <div>
         {image && (

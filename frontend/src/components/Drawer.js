@@ -174,7 +174,9 @@ export default function Drawer({image, drawable, onBoxesChange}){
               left: box.x1 * scale.x,
               top: box.y1 * scale.y,
               zIndex: 10,
-              fontSize: "12px"
+              fontSize: "12px",
+              color: "white",
+              backgroundColor: "black",
             }}
           >
             {CLASSES.map(cls => <option key={cls} value={cls}>{cls}</option>)}

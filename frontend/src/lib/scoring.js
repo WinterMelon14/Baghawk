@@ -29,8 +29,9 @@ const iou = (boxA, boxB) => {
  */
 const boxScore = (iou, labelCorrect) => {
     const g = labelCorrect ? 1 : 0;
-    return Math.round(Math.atanh(iou - 0.001) * 0.7 * (g + 0.4) * 100) / 100;
-}
+    //return Math.round(Math.atanh(iou - 0.001) * 0.7 * (g + 0.4) * 100) / 100;
+    return Math.round(3 * Math.tanh(iou - 0.001) * 0.7 * (g + 0.4) * 100) / 100;
+}   
 
 
 /**
