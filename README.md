@@ -15,7 +15,7 @@
 * Knife
 * Lighter
 
-[Test it out live!](baghawk.vercel.app)
+[Test it out live!](https://baghawk.vercel.app)
 
 ## Run it yourself:
 `cd frontend && npm run dev`<br>
