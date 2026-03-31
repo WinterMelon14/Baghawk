@@ -17,8 +17,12 @@
 
 [Test it out live!](baghawk.vercel.app)
 
-To run it yourself: Follow the training steps in the notebooks, download next and the requirements file, and run on localhost! 
-
+## Run it yourself:
+cd frontend && npm run dev
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload
+Verify that in frontend/lib/api.js the FAST_URL is set to the right address (for running locally it should be port 8000)
 
 ## Todo
 
