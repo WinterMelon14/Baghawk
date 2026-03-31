@@ -18,3 +18,8 @@
 [Test it out live!](baghawk.vercel.app)
 
 To run it yourself: Follow the training steps in the notebooks, download next and the requirements file, and run on localhost! 
+
+
+## Todo
+
+I plan to experiment with more models like RT-DETR and changing around layers to see what gives the best results
