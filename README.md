@@ -18,10 +18,10 @@
 [Test it out live!](baghawk.vercel.app)
 
 ## Run it yourself:
-`cd frontend && npm run dev`
-`cd backend`
-`pip install -r requirements.txt`
-`uvicorn main:app --reload`
+`cd frontend && npm run dev`<br>
+`cd backend`<br>
+`pip install -r requirements.txt`<br>
+`uvicorn main:app --reload`<br>
 
 Verify that in frontend/lib/api.js the FAST_URL is set to the right address (for running locally it should be port 8000)
 
